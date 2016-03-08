@@ -1,6 +1,7 @@
 {
   "name": "sqltag",
-  "version": "1.0.0",
+  "version": "1.0.1",
+  "description": "SQL generation using ES6 tagged template strings",
   "main": "build.js",
   "license": "ISC",
   "scripts": {
