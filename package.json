@@ -1,0 +1,22 @@
+{
+  "name": "sqltag",
+  "version": "1.0.0",
+  "main": "build.js",
+  "license": "ISC",
+  "scripts": {
+    "build": "./node_modules/.bin/babel --presets es2015-node4 index.js -o build.js",
+    "prepublish": "npm run build",
+    "test": "npm run build && ./node_modules/.bin/mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eknkc/node-sqltag.git"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "babel-cli": "^6.6.5",
+    "babel-preset-es2015-node4": "^2.0.3",
+    "chai": "^3.5.0",
+    "mocha": "^2.4.5"
+  }
+}
