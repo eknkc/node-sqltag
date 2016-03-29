@@ -1,4 +1,8 @@
 export default function SQLTAG(parts, ...values) {
+  return SQLTAG.frag(parts, ...values).build();
+}
+
+SQLTAG.frag = function(parts, ...values) {
   if (typeof parts === 'string')
     parts = [parts];
 
@@ -12,7 +16,7 @@ export default function SQLTAG(parts, ...values) {
     return merged
   }, [])
 
-  return new TreeNode(merged).build();
+  return new TreeNode(merged);
 }
 
 function makeNode(value) {
