@@ -75,11 +75,19 @@ describe('sqltag', function() {
     })
   })
 
-  it('should interpolate insert values', function() {
+  it('should interpolate insert values (object)', function() {
     expect(SQL`INSERT INTO table ${SQL.values({ name: 'foo', city: 'bar' })}`).to.deep.equal({
       sql: 'INSERT INTO table (`name`, `city`) VALUES (?, ?)',
       text: 'INSERT INTO table ("name", "city") VALUES ($1, $2)',
       values: ['foo', 'bar']
+    })
+  })
+
+  it('should interpolate insert values (array)', function() {
+    expect(SQL`INSERT INTO table ${SQL.values([{ name: 'foo', city: 'bar' }, { name: 'baz', city: 'quux' }])}`).to.deep.equal({
+      sql: 'INSERT INTO table (`name`, `city`) VALUES (?, ?), (?, ?)',
+      text: 'INSERT INTO table ("name", "city") VALUES ($1, $2), ($3, $4)',
+      values: ['foo', 'bar', 'baz', 'quux']
     })
   })
 
