@@ -179,6 +179,42 @@ class Values extends TreeNode {
   }
 }
 
+class ValuesArray extends TreeNode {
+  constructor(values) {
+    let tree = [];
+
+    if (values.length) {
+      let keys = Object.keys(values[0]);
+
+      if (keys.length) {
+        tree.push('(');
+
+        keys.forEach(key => {
+          tree.push(new Ident(key), ', ');
+        });
+
+        tree.pop();
+
+        tree.push(') VALUES (');
+
+        values.forEach(value => {
+          keys.forEach(key => {
+            tree.push(makeNode(value[key]), ', ');
+          });
+          tree.pop();
+          tree.push('), (');
+        });
+
+        tree.pop();
+
+        tree.push(')')
+      }
+    }
+
+    super(tree);
+  }
+}
+
 class Spread extends TreeNode {
   constructor(values) {
     let tree = [];
@@ -207,7 +243,6 @@ const mapping = {
   'expr': Expr,
   'where': Where,
   'set': SetValues,
-  'values': Values,
   'spread': Spread,
   'op': Op
 };
@@ -217,3 +252,8 @@ Object.keys(mapping).forEach(function(key) {
     return new mapping[key](...args);
   }
 })
+
+// Special case for SQL.values, since it's polymorphic.
+SQLTAG.values = function(values) {
+  return Array.isArray(values) ? new ValuesArray(values) : new Values(values)
+}

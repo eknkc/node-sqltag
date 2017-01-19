@@ -57,6 +57,7 @@ pg.query(SQL`UPDATE users ${SQL.set({ name: 'foo', age: 40 })} WHERE id = ${33}`
 
 ```js
 pg.query(SQL`INSERT INTO users ${SQL.values({ name: 'foo', age: 40 })}`)
+pg.query(SQL`INSERT INTO users ${SQL.values([{ name: 'foo', age: 40 }, { name: 'bar', age: 50 }])}`)
 ```
 
 ### spread
