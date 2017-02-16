@@ -64,4 +64,5 @@ pg.query(SQL`INSERT INTO users ${SQL.values([{ name: 'foo', age: 40 }, { name: '
 
 ```js
 pg.query(SQL`SELECT * FROM users WHERE tags IN (${SQL.spread(['foo', 'bar', 'baz'])})`)
+pg.query(SQL`SELECT * FROM users WHERE tags IN (${SQL.spread([['foo', 'bar'], ['baz', 'quux']])})`)
 ```

@@ -99,6 +99,14 @@ describe('sqltag', function() {
     })
   })
 
+  it('should interpolate spread (nested)', function() {
+    expect(SQL`SELECT * from table WHERE (composite, key) IN (${SQL.spread([['foo', 'bar'], ['baz', 'quux']])})`).to.deep.equal({
+      sql: 'SELECT * from table WHERE (composite, key) IN ((?, ?), (?, ?))',
+      text: 'SELECT * from table WHERE (composite, key) IN (($1, $2), ($3, $4))',
+      values: ['foo', 'bar', 'baz', 'quux']
+    })
+  })
+
   it('should interpolate operators', function() {
     expect(SQL`SELECT * from table ${SQL.where({ age: SQL.op('>', 18) })}`).to.deep.equal({
       sql: 'SELECT * from table WHERE `age` > ?',

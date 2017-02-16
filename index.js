@@ -221,7 +221,16 @@ class Spread extends TreeNode {
 
     if (values.length) {
       values.forEach(value => {
-        tree.push(makeNode(value), ', ');
+        if (Array.isArray(value) && value.length) {
+          tree.push('(');
+          value.forEach(v => {
+            tree.push(makeNode(v), ', ');
+          });
+          tree.pop();
+          tree.push(')', ', ');
+        } else {
+          tree.push(makeNode(value), ', ');
+        }
       })
 
       tree.pop();
